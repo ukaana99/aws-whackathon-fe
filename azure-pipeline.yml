@@ -1,0 +1,70 @@
+trigger:
+  branches:
+    include:
+      - dev
+variables:
+  - group: staging.eptwv4.frontend
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+  - stage: Build
+    jobs:
+      - job: BuildJob
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '14.x'
+            displayName: 'Install Node.js'
+          - script: |
+              npm install
+            displayName: 'Install Dependencies'
+            env:
+              VITE_CLIENT_ID: '$(VITE_CLIENT_ID)'
+              VITE_API_CLIENT_ID: '$(VITE_API_CLIENT_ID)'
+              VITE_REDIRECT_URL: '$(VITE_REDIRECT_URL)'
+              VITE_AUTHORITY: '$(VITE_AUTHORITY)'
+
+          - script: |
+              npm ci
+              npm run build
+            displayName: 'Build Vite App'
+
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: 'dist'
+              artifact: 'webapp'
+              publishLocation: pipeline
+            displayName: 'Publish Artifact'
+
+  - stage: Deploy
+    jobs:
+      - deployment: DeployJob
+        environment: 'Dev'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: DownloadPipelineArtifact@2
+                  inputs:
+                    buildType: 'current'
+                    artifactName: 'webapp'
+                    targetPath: '$(Pipeline.Workspace)'
+
+                - script: ls -la $(Pipeline.Workspace)/webapp
+                  displayName: 'List Pipeline.Workspace after download'
+
+                - task: DownloadPipelineArtifact@2
+                  inputs:
+                    buildType: 'current'
+                    artifactName: 'webapp'
+                    targetPath: '$(Pipeline.Workspace)'
+                - task: AzureStaticWebApp@0
+                  inputs:
+                    workingDirectory: '$(Pipeline.Workspace)'
+                    app_build_command: ''
+                    app_location: 'webapp'
+                    azure_static_web_apps_api_token: '$(azure_static_web_deployment_token)'
+                    output_location: '.'
+                  displayName: 'Deploy to Azure Static Web App'

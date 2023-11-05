@@ -1,0 +1,35 @@
+import { Canvas, Controls, Meta, Primary, Source, Story } from '@storybook/blocks';
+import dedent from 'ts-dedent';
+
+import * as ButtonStories from './Button.stories';
+
+<Meta of={ButtonStories} />
+
+# Button
+
+This shows the various states for buttons. No Icon is the start state for the primary action button of the page. Icon Before and After represent progress states for buttons and icon placement for buttons with addition features (Accordions, downloads)
+
+# Best Practices
+
+- Button should be clearly and accurately labeled. It is recommended to use actionable verb.
+- Use a primary button to indicate the main action of a group button set.
+- Button size matters - make sure the size of the button is large enough to interact with on web or other device but not too large so as to be visually overwhelming.
+
+<Primary />
+<Controls />
+
+### Overview
+
+<Canvas of={ButtonStories.Overview} />
+<Canvas of={ButtonStories.BasicButton} withSource="none" />
+<Source
+  format="dedent"
+  language="jsx"
+  code={`
+    <Stack spacing={2} direction="row">
+      <Button variant="text">Text</Button>
+      <Button variant="contained">Contained</Button>
+      <Button variant="outlined">Outlined</Button>
+    </Stack>
+  `}
+/>
