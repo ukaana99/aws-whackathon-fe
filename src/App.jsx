@@ -8,6 +8,7 @@ import { ThemeProvider } from '@mui/material/styles';
 
 import { DialogProvider } from '@/providers/Dialog';
 import { LayoutContext } from '@/providers/Layout';
+import { SettingsProvider } from '@/providers/Settings';
 import Routes from '@/routes';
 
 function App() {
@@ -23,8 +24,10 @@ function App() {
         maxSnack={5}
       >
         <DialogProvider>
-          <CssBaseline enableColorScheme />
-          <Routes />
+          <SettingsProvider>
+            <CssBaseline enableColorScheme />
+            <Routes />
+          </SettingsProvider>
         </DialogProvider>
       </SnackbarProvider>
     </ThemeProvider>

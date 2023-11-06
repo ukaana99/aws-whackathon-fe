@@ -25,3 +25,9 @@ export const fetchData = async () => {
   console.log(data);
   return data;
 };
+
+export const triggerLambda = async () => {
+  const data = await fetch('https://v7c7msn25e.execute-api.us-east-1.amazonaws.com/trigger-lambda');
+  console.log(data);
+  return data;
+};
