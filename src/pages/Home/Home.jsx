@@ -13,6 +13,7 @@ import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Unstable_Grid2';
 
+import { fetchData } from '@/api/fetchData';
 import DialogTitle from '@/components/dialogs/DialogTitle';
 import { useDialog } from '@/hooks/useDialog';
 import PageLayout from '@/layouts/PageLayout';
@@ -31,11 +32,11 @@ const chatlog = [
 function Message(props) {
   const { item } = props;
 
-  const reverse = item.userId != 1 ? true : false;
+  const reverse = item.aimodel === 'vertexai' ? true : false;
 
   return (
     <Stack my={1} direction={reverse ? 'row-reverse' : 'row'}>
-      <Avatar alt={`${item.userId}`} src={`https://i.pravatar.cc/300?img=${item.userId}`} />
+      <Avatar alt={`${item.aimodel}`} src={`https://i.pravatar.cc/300?img=${item.aimodel}`} />
       <Box bgcolor={reverse ? 'primary.100' : 'secondary.100'} p={2} mx={2} borderRadius="8px">
         <Typography>{item.message}</Typography>
       </Box>
@@ -47,7 +48,21 @@ function ChatBox() {
   const navigate = useNavigate();
 
   const [running, setRunning] = useState(false);
+  const [chats, setChats] = useState([]);
   const [openDialog, closeDialog] = useDialog();
+
+  useEffect(() => {
+    const updateData = async () => {
+      const data = await fetchData();
+      setChats(data.Items);
+    };
+
+    const interval = setInterval(() => {
+      updateData();
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const onOpenRickDialog = () =>
     openDialog({
@@ -65,14 +80,14 @@ function ChatBox() {
             <Box
               component="img"
               src="https://media.tenor.com/x8v1oNUOmg4AAAAd/rickroll-roll.gif"
-              alt='Not found'
+              alt="Not found"
             />
           </DialogContent>
         </>
       ),
     });
 
-  const renderChat = () => chatlog.map((item, index) => <Message key={index} item={item} />);
+  const renderChat = () => chats.map((item, index) => <Message key={index} item={item} />);
   return (
     <Box bgcolor="background.paper" py={4} borderRadius="8px" flexGrow={1}>
       <Typography variant="h6" ml={4} mb={3} fontSize={18}>

@@ -1,22 +1,4 @@
 {
-  "api": {
-    "awswhackathonfe": {
-      "dependsOn": [],
-      "output": {
-        "authConfig": {
-          "additionalAuthenticationProviders": [],
-          "defaultAuthentication": {
-            "apiKeyConfig": {
-              "apiKeyExpirationDays": 7
-            },
-            "authenticationType": "API_KEY"
-          }
-        }
-      },
-      "providerPlugin": "awscloudformation",
-      "service": "AppSync"
-    }
-  },
   "hosting": {
     "amplifyhosting": {
       "providerPlugin": "awscloudformation",
@@ -40,6 +22,70 @@
           "resourceName": "amplifyhosting"
         }
       ]
+    },
+    "AMPLIFY_storage_Conversation_arn": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "Conversation"
+        }
+      ]
+    },
+    "AMPLIFY_storage_Conversation_partitionKeyName": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "Conversation"
+        }
+      ]
+    },
+    "AMPLIFY_storage_Conversation_partitionKeyType": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "Conversation"
+        }
+      ]
+    },
+    "AMPLIFY_storage_Conversation_region": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "Conversation"
+        }
+      ]
+    },
+    "AMPLIFY_storage_Conversation_sortKeyName": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "Conversation"
+        }
+      ]
+    },
+    "AMPLIFY_storage_Conversation_sortKeyType": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "Conversation"
+        }
+      ]
+    },
+    "AMPLIFY_storage_Conversation_tableName": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "Conversation"
+        }
+      ]
+    }
+  },
+  "storage": {
+    "Conversation": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB",
+      "serviceType": "imported"
     }
   }
 }
