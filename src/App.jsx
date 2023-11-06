@@ -1,10 +1,10 @@
+// import Toast from '@base/components/Toast';
+import { SnackbarProvider } from 'notistack';
+
 import { useContext } from 'react';
 
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
-
-// import Toast from '@base/components/Toast';
-import { SnackbarProvider } from 'notistack';
 
 import { DialogProvider } from '@/providers/Dialog';
 import { LayoutContext } from '@/providers/Layout';
@@ -20,6 +20,7 @@ function App() {
           vertical: 'top',
           horizontal: 'right',
         }}
+        maxSnack={5}
       >
         <DialogProvider>
           <CssBaseline enableColorScheme />
