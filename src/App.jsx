@@ -17,7 +17,7 @@ function App() {
     <ThemeProvider theme={layoutContext.theme}>
       <SnackbarProvider
         anchorOrigin={{
-          vertical: 'top',
+          vertical: 'bottom',
           horizontal: 'right',
         }}
         maxSnack={5}

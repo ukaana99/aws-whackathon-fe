@@ -57,7 +57,7 @@ function ChatBox() {
           <DialogTitle
             title="???"
             onClose={() => {
-              closeDialog;
+              closeDialog();
               navigate('/DESTROYED');
             }}
           />
@@ -65,7 +65,7 @@ function ChatBox() {
             <Box
               component="img"
               src="https://media.tenor.com/x8v1oNUOmg4AAAAd/rickroll-roll.gif"
-              alt={'Not found'}
+              alt='Not found'
             />
           </DialogContent>
         </>
